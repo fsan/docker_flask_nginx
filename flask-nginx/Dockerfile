@@ -1,4 +1,5 @@
 FROM ubuntu:latest
+MAINTAINER motbus3
 
 RUN apt-get update
 RUN apt-get install nginx python3 python3-pip -y
