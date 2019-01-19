@@ -13,7 +13,7 @@ COPY /wsgi/app.ini /packages/app.ini
 COPY /nginx/nginx-app.conf /etc/nginx/sites-available/default
 RUN update-rc.d nginx enable
 
-COPY /app-setup/service.sh /service.sh
+COPY /kickstart/service.sh /service.sh
 RUN chmod 550 /service.sh
 
 COPY /packages /packages
