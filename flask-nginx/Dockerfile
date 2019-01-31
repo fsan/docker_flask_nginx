@@ -11,6 +11,8 @@ RUN pip3 install -r /app-setup/requirements.txt
 COPY /wsgi/app.ini /packages/app.ini
 
 COPY /nginx/nginx-app.conf /etc/nginx/sites-available/default
+# COPY /nginx/permissions.conf /etc/nginx/sites-available/permissions.conf
+
 RUN update-rc.d nginx enable
 
 COPY /kickstart/service.sh /service.sh

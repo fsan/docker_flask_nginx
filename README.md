@@ -13,6 +13,35 @@ This specific repository does not consider a node for Load Balancer.
 then:
 Flask App  &rarr; uWSGI &rarr; *uWSGI_pass socket* &rarr; **NGINX RESPONSE**
 
+## Start-up options (NEW!)
+If limitint the access of nginx server is a requirement, I added a parsing for ${ALLOWED} environment variable that you can add to the container
+For example:
+
+docker run --name ng -d -p 8080:80 --network=mynetwork -e ALLOWED="172.18.0.2;172.18.0.5;" nginx-python3
+
+You need to understand what is happening!
+ALLOWED is being parsed by spliting at semicolon and a permissions.conf file is being generated.
+This permission.conf file will be included by nginx at site configurations (/etc/nginx/sites-available/default)
+Each section of ALLOWED variable will generate an allow permission line:
+By the end of permission.conf file a line will be added to avoid access by everyone else
+
+```
+allow $IP_1;
+allow $IP_2;
+allow $IP_3;
+
+deny all;
+```
+I'm not trying to stop you to inject anything through this variable since it should the sysadmin the one to run the starting command. If added security is needed, please feel free to contribute to this repository :)
+
+It is *very important* to notice that nginx configurations allow access by range. For this you only need to set a ip range such as:
+
+docker run --name ng -d -p 8080:80 --network=mynetwork -e ALLOWED="172.18.0.0/16;172.17.0.3;" nginx-python3
+
+in this case 172.17.0.3 and all IP addresses under 172.18.xxx.xxx will be allowed
+
+If ALLOWED environment variable is not specified access *will be granted for everyone*
+
 ## Git
 [Flask Nginx Docker](https://github.com/fsan/flask_nginx_docker_xp) &rarr; feel free to improve
 
@@ -80,4 +109,5 @@ Errors: fd-unavail 24681 addrunavail 0 ftab-full 0 other 0
 ## TODO:
 - Need to start NGINX and uWSGI as services and should not need start at ENTRYPOINT
 - Load balancer node
+- httpperf has about 24681 errors, but it is caused because my system cannot handle so much open files at same time. The average response is around 112.4 ms
 
