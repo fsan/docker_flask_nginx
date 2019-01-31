@@ -17,9 +17,6 @@ RUN update-rc.d nginx enable
 ADD /kickstart/ /
 RUN chmod 550 /*.sh
 
-# ADD /service/uwsgi.service /packages
-# RUN ln -s /packages/uwsgi.service /etc/systemd/system/multi-user.target.wants/uwsgi.service
-
 ADD /service/uwsgi /etc/init.d/
 RUN chmod 755 /etc/init.d/uwsgi
 
