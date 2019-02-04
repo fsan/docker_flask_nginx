@@ -22,7 +22,8 @@ touch "${PID}"
 test -x $DAEMON || exit 0
 
 start_uwsgi() {
-	start-stop-daemon --start --quiet --pidfile $PID --exec $DAEMON --user www-data # > /dev/null
+	#start-stop-daemon --start --quiet --pidfile $PID --exec $DAEMON --user www # > /dev/null
+	start-stop-daemon --start --pidfile $PID --exec $DAEMON --user www # > /dev/null
  	RETVAL="$?"
 	return $RETVAL
 }

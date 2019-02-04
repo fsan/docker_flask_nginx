@@ -3,6 +3,13 @@
 
 As stated by official Flask documentation, you shouldn't use Werkzeug as production server. An easy alternative to setup is NGINX, and you can find it at [NGINX Official Image](https://hub.docker.com/_/nginx).
 
+*NOTE:*
+	The main branch uses ubuntu as base, while this branch uses nginx-alpine.
+	To boot nginx and uwsgi as services, we are using openrc.
+	I reused nginx init.d script with few modifications to remove unused items for this image.
+	The ubuntu based image has around 516 MB, while this has around 229 MB.
+	I tried to pay attention to configuration details, but maybe I lost something around. Feel free to contribute!
+
 This is a basic example of Flask application served by NGINX.
 
 This specific repository does not consider a node for Load Balancer.

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 PERM_FILE=/etc/nginx/sites-available/permissions.conf
 
@@ -15,6 +15,6 @@ else
 		fi
        	done ;
        	echo deny all\; >> $PERM_FILE;
-	chown www-data $PERM_FILE
+	chown www $PERM_FILE
 	chmod 440 $PERM_FILE
 fi
